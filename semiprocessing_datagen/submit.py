@@ -12,7 +12,7 @@ def main():
 
     os.system('mkdir -p logs')
 
-    for i in range(16401,16481):
+    for i in range(16401,16441):
         # Recreate the condor submission file                                                                   
         subfile = "logs/d"+str(i)+".sub"
         if os.path.isfile(subfile):
@@ -32,7 +32,7 @@ def main():
         
         # Job flavour determines job wall time                                                                  
         # https://batchdocs.web.cern.ch/local/submit.html#job-flavours                                          
-        f.write("+JobFlavour             = \"espresso\" \n")
+        f.write("+JobFlavour             = \"workday\" \n")
         f.write("queue \n")
         
         f.close()
