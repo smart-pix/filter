@@ -114,7 +114,7 @@ def main():
         index = int(sys.argv[1])
         tag = "d"+str(index)
         inputdir = "./"
-        arr_events, arr_truth = parseFile(filein=inputdir+"pixel_clusters_d"+str(index)+".out",tag=tag)
+        arr_events, arr_truth = parseFile(filein=inputdir+"pixel_clusters_d"+str(index)+".out",tag=tag, row_size=row_size, col_size=col_size)
 
         #truth quantities - all are dumped to DF                                                                                                                           
         df = pd.DataFrame(arr_truth, columns = ['x-entry', 'y-entry','z-entry', 'n_x', 'n_y', 'n_z', 'number_eh_pairs', 'y-local', 'pt'])
