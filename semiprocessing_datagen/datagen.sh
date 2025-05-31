@@ -9,13 +9,14 @@ i=$1
 source /cvmfs/sft.cern.ch/lcg/views/LCG_105/x86_64-el9-gcc13-opt/setup.sh
 #source /cvmfs/sft.cern.ch/lcg/views/LCG_101/x86_64-centos7-gcc8-opt/setup.sh
 
-outdir=/eos/user/d/dshekar/dataset_3su/parquet_temp/
+outdir=/eos/project/s/smartpix-box/pixelAV_datasets/unshuffled_DO_NOT_DELETE/largerWindowPreliminary/dataset_3s_32x32/parquet_temp/
 #outdir=/eos/project/s/smartpix-box/pixelAV_datasets/dataset_9s/parquet_temp/
 
 mkdir unflipped
 
 #point to the correct path
-EOSDIR=/eos/user/d/dshekar/dataset_3su/dataset_3su_50x12P5/
+EOSDIR=/eos/project/s/smartpix-box/pixelAV_datasets/unshuffled_DO_NOT_DELETE/largerWindowPreliminary/dataset_3s_32x32/dataset_3s_32x32_50x12P5/
+#EOSDIR=/eos/user/d/dshekar/dataset_7s/dataset_7s_100x25/
 #EOSDIR=/eos/project/s/smartpix-box/pixelAV_datasets/dataset_7s/dataset_7s_50x12P5/
 #EOSDIR=/eos/user/d/dshekar/dataset_3sr/dataset_3sr_100x25/
 #EOSDIR=/eos/user/d/dshekar/dataset_5s/dataset_5s_100x25/
@@ -33,8 +34,5 @@ python datagen.py $i
 
 xrdcp -f unflipped/labels_d${i}.parquet root://eosuser.cern.ch/$outdir/unflipped/labels_d${i}.parquet
 xrdcp -f unflipped/recon2D_d${i}.parquet root://eosuser.cern.ch/$outdir/unflipped/recon2D_d${i}.parquet
-xrdcp -f unflipped/recon2D_uncentered_d${i}.parquet root://eosuser.cern.ch/$outdir/unflipped/recon2D_uncentered_d${i}.parquet
 xrdcp -f unflipped/recon3D_d${i}.parquet root://eosuser.cern.ch/$outdir/unflipped/recon3D_d${i}.parquet
-xrdcp -f unflipped/recon3D_uncentered_d${i}.parquet root://eosuser.cern.ch/$outdir/unflipped/recon3D_uncentered_d${i}.parquet
-xrdcp -f unflipped/offset_histogram_d${i}.png root://eosuser.cern.ch/$outdir/unflipped/offset_histogram_d${i}.png
 
