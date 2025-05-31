@@ -133,13 +133,14 @@ def main():
         sensor_pitch_X = 50 # in um
         sensor_pitch_Y = 12.5 # in um
         sensor_thickness = 100 #um      
-        row_size, col_size = 16, 16
+        row_size, col_size = 32, 32
         # row_size, col_size = 13, 21
-        maxXshift = 9
-        maxYshift = 5
+        maxXshift = 7
+        maxYshift = 7
         boundary_charge_threshold = 1
         print("==========================")                   
         print(f'NOTE - sensor geometry is hard-coded as {sensor_pitch_X}x{sensor_pitch_Y}x{sensor_thickness} um3. \nAssuming pixel array size = {col_size} X {row_size}/')
+        print(f'Offsets introduced = ({maxXshift}, {maxYshift}) along (X, Y).')
         print("==========================")                   
         index = int(sys.argv[1])
         tag = "d"+str(index)
@@ -186,8 +187,8 @@ def main():
                 # Only last time slice
                 df2list.append(np.array(e[-1]).flatten())
                 matrix = np.array(e[-1])
-                assert matrix.shape == (row_size, col_size)
-                df.loc[i, 'original_atEdge'] = check_boundary(matrix, boundary_charge_threshold)
+                assert matrix.shape[0] == row_size * col_size
+                df.loc[i, 'original_atEdge'] = check_boundary(matrix.reshape(row_size, col_size), boundary_charge_threshold)
                 df3list.append(np.array(e).flatten())
                 # print("old block:")
                 # for idx, block in enumerate(e.reshape(20, row_size, col_size)):
@@ -195,6 +196,9 @@ def main():
                 #     for row in block:
                 #         print(' '.join(map(str, row)))
                 # All time slices
+                if df.loc[i, 'original_atEdge']: # Exception handling: if cluster is already at edge, then do not apply offsets
+                        df.loc[i, 'offset1'] = 0
+                        df.loc[i, 'offset2'] = 0
                 random_integer = df['offset1'].iloc[i]
                 random_integer2 = df['offset2'].iloc[i]
                 offset = (random_integer, random_integer2) #(4, 5) #4 is up/down, 5 is left/right
@@ -208,7 +212,7 @@ def main():
                 df2list_uncentered.append(np.array(new_blocks[-1]).flatten())
                 matrix_uncentered = np.array(new_blocks[-1])
                 assert matrix_uncentered.shape == (row_size, col_size)
-                df.loc[i, 'uncentered_atEdge'] = check_boundary(matrix_uncentered, boundary_charge_threshold)
+                df.loc[i, 'uncentered_atEdge'] = check_boundary(matrix_uncentered.reshape(row_size, col_size), boundary_charge_threshold)
                 df3list_uncentered.append(np.array(new_blocks).flatten())
         df2 = pd.DataFrame(df2list)
         df2_uncentered = pd.DataFrame(df2list_uncentered)
@@ -243,3 +247,4 @@ if __name__ == "__main__":
     main()
 
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
+
