@@ -126,7 +126,7 @@ def main():
         df['x-midplane'] = df['x-entry'] + df['cotAlpha']*(sensor_thickness/2 - df['z-entry'])
         df['original_atEdge'] = False
         df['charge_atEdge'] = 0
-        df['nPix_atEdgeAbove1e'] = 0
+        df['nPixAbove1e_atEdge'] = 0
         print("The shape of the event array: ", arr_events.shape)
         print("The ndim of the event array: ", arr_events.ndim)
         print("The dtype of the event array: ", arr_events.dtype)
@@ -152,7 +152,7 @@ def main():
                         df.loc[i, 'original_atEdge'] = True
                         # Following columns are added to the df if has_pixel_above_threshold_1pix is True. Could add them if has_pixel_above_threshold_1pix is False, but would be too small of a charge at the edge to treat as relevant.
                         df.loc[i, 'charge_atEdge'] = total_sum_1pix
-                        df.loc[i, 'nPix_atEdgeAbove1e'] = count_above_threshold_1pix
+                        df.loc[i, 'nPixAbove1e_atEdge'] = count_above_threshold_1pix
                 # All time slices
                 df3list.append(np.array(e).flatten())
 
