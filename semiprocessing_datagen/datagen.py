@@ -1,35 +1,32 @@
+# DS 29June25 - datagen.py modified to include new labels after we've arrived at a definition of contained clusters.
 import sys
 import numpy as np
 import pandas as pd
 import math
+import matplotlib.pyplot as plt
 
-def split(index,df1,df2,df3):
+def split(sensor_thickness,index,df1,df2,df3):
 
         df1.columns = df1.columns.astype(str)
         df2.columns = df2.columns.astype(str)
         df3.columns = df3.columns.astype(str)
 
         # unflipped, all charge                                                                         
-        df1[df1['z-entry']==100].to_parquet("unflipped/labels_d"+str(index)+".parquet")
-        df2[df1['z-entry']==100].to_parquet("unflipped/recon2D_d"+str(index)+".parquet")
-        df3[df1['z-entry']==100].to_parquet("unflipped/recon3D_d"+str(index)+".parquet")
+        df1[df1['z-entry']==sensor_thickness].to_parquet("unflipped/labels_d"+str(index)+".parquet")
+        df2[df1['z-entry']==sensor_thickness].to_parquet("unflipped/recon2D_d"+str(index)+".parquet")
+        df3[df1['z-entry']==sensor_thickness].to_parquet("unflipped/recon3D_d"+str(index)+".parquet")
 
-def check_boundary(matrix, threshold=1):
-    """
-    Checks if there are non-zero elements at the boundary of the given matrix.
-    """
-    # Check the boundary elements
-    top_row = matrix[0, :]  # Top row
-    bottom_row = matrix[-1, :]  # Bottom row
-    left_column = matrix[:, 0]  # Left column
-    right_column = matrix[:, -1]  # Right column
+def check_1pix_at_boundary(matrix, threshold=1):
+        # Define the boundary
+        boundaries = np.concatenate([matrix[0, :], matrix[-1, :], matrix[:, 0], matrix[:, -1]])
+        # Check for at least one pixel above the threshold
+        has_pixel_above_threshold = np.any(np.abs(boundaries) > threshold)
+        # Count and sum pixels above the threshold
+        count_above_threshold = np.sum(np.abs(boundaries) > threshold)
+        total_sum = np.sum(boundaries)
 
-    # If any boundary element is non-zero, set the flag to True
-    if (np.any(np.abs(top_row) > threshold) or np.any(np.abs(bottom_row) > threshold) or np.any(np.abs(left_column) > threshold) or np.any(np.abs(right_column) > threshold)    ):
-        return True
-    else:
-        return False
-    
+        return has_pixel_above_threshold, count_above_threshold, total_sum
+
 def parseFile(filein,tag,nevents=-1,row_size=13,col_size=21):
 
         with open(filein) as f:
@@ -105,7 +102,7 @@ def parseFile(filein,tag,nevents=-1,row_size=13,col_size=21):
         return arr_events, arr_truth
 
 def main():
-        row_size, col_size = 32, 32
+        row_size, col_size = 16, 16
         sensor_thickness = 100 #um         
         boundary_charge_threshold = 1 # threshold for charge at the boundary to be considered as a boundary charge
         print("==========================")                   
@@ -116,7 +113,7 @@ def main():
         inputdir = "./"
         arr_events, arr_truth = parseFile(filein=inputdir+"pixel_clusters_d"+str(index)+".out",tag=tag, row_size=row_size, col_size=col_size)
 
-        #truth quantities - all are dumped to DF                                                                                                                           
+        #truth quantities - all are dumped to DF
         df = pd.DataFrame(arr_truth, columns = ['x-entry', 'y-entry','z-entry', 'n_x', 'n_y', 'n_z', 'number_eh_pairs', 'y-local', 'pt'])
         cols = df.columns
         for col in cols:
@@ -128,6 +125,8 @@ def main():
         df['y-midplane'] = df['y-entry'] + df['cotBeta']*(sensor_thickness/2 - df['z-entry'])
         df['x-midplane'] = df['x-entry'] + df['cotAlpha']*(sensor_thickness/2 - df['z-entry'])
         df['original_atEdge'] = False
+        df['charge_atEdge'] = 0
+        df['nPix_atEdgeAbove1e'] = 0
         print("The shape of the event array: ", arr_events.shape)
         print("The ndim of the event array: ", arr_events.ndim)
         print("The dtype of the event array: ", arr_events.dtype)
@@ -142,23 +141,26 @@ def main():
         df3list = []
 
         for i, e in enumerate(arr_events):
-
+                
                 # Only last time slice
                 df2list.append(np.array(e[-1]).flatten())
                 matrix = np.array(e[-1])
                 assert matrix.shape[0] == row_size * col_size
-                df.loc[i, 'original_atEdge'] = check_boundary(matrix.reshape(row_size, col_size), boundary_charge_threshold)
 
+                has_pixel_above_threshold_1pix, count_above_threshold_1pix, total_sum_1pix = check_1pix_at_boundary(matrix.reshape(row_size, col_size), boundary_charge_threshold)
+                if has_pixel_above_threshold_1pix:
+                        df.loc[i, 'original_atEdge'] = True
+                        # Following columns are added to the df if has_pixel_above_threshold_1pix is True. Could add them if has_pixel_above_threshold_1pix is False, but would be too small of a charge at the edge to treat as relevant.
+                        df.loc[i, 'charge_atEdge'] = total_sum_1pix
+                        df.loc[i, 'nPix_atEdgeAbove1e'] = count_above_threshold_1pix
                 # All time slices
                 df3list.append(np.array(e).flatten())
 
-                max_val = np.amax(e)
-
         df2 = pd.DataFrame(df2list)
-        df3 = pd.DataFrame(df3list)  
+        df3 = pd.DataFrame(df3list)
 
         # split into flipped/unflipped, pos/neg charge
-        split(index,df,df2,df3)
+        split(sensor_thickness, index,df,df2,df3)
 
 if __name__ == "__main__":
     main()
