@@ -1,0 +1,82 @@
+{
+  "300,1600,2400": {
+    "signal_efficiency": 30.864197530864196,
+    "background_rejection": 62.30984963676297,
+    "data_reduction": 62.30984963676297,
+    "dnn_rtl_match_ts19": 50.01,
+    "best_dnn_rtl_match": [
+      20,
+      49.12
+    ]
+  },
+  "400,1600,2400": {
+    "signal_efficiency": 11.456790123456791,
+    "background_rejection": 66.63355296502787,
+    "data_reduction": 66.63355296502787,
+    "dnn_rtl_match_ts19": 46.33,
+    "best_dnn_rtl_match": [
+      20,
+      49.12
+    ]
+  },
+  "500,1600,2400": {
+    "signal_efficiency": 22.666666666666664,
+    "background_rejection": 67.34110491637101,
+    "data_reduction": 67.34110491637101,
+    "dnn_rtl_match_ts19": 73.17,
+    "best_dnn_rtl_match": [
+      21,
+      75.8
+    ]
+  },
+  "600,1600,2400": {
+    "signal_efficiency": 47.160493827160494,
+    "background_rejection": 54.33823280959622,
+    "data_reduction": 54.33823280959622,
+    "dnn_rtl_match_ts19": 90.47,
+    "best_dnn_rtl_match": [
+      21,
+      89.84
+    ]
+  },
+  "700,1600,2400": {
+    "signal_efficiency": 58.0246913580247,
+    "background_rejection": 47.02280790674101,
+    "data_reduction": 47.02280790674101,
+    "dnn_rtl_match_ts19": 96.53,
+    "best_dnn_rtl_match": [
+      19,
+      96.53
+    ]
+  },
+  "800,1600,2400": {
+    "signal_efficiency": 68.5925925925926,
+    "background_rejection": 40.57036661598243,
+    "data_reduction": 40.57036661598243,
+    "dnn_rtl_match_ts19": 98.21,
+    "best_dnn_rtl_match": [
+      19,
+      98.21
+    ]
+  },
+  "900,1600,2400": {
+    "signal_efficiency": 74.51851851851852,
+    "background_rejection": 35.00591316100692,
+    "data_reduction": 35.00591316100692,
+    "dnn_rtl_match_ts19": 98.61,
+    "best_dnn_rtl_match": [
+      19,
+      98.61
+    ]
+  },
+  "1000,1600,2400": {
+    "signal_efficiency": 70.81481481481482,
+    "background_rejection": 30.420062695924766,
+    "data_reduction": 30.420062695924766,
+    "dnn_rtl_match_ts19": 99.06,
+    "best_dnn_rtl_match": [
+      19,
+      99.06
+    ]
+  }
+}

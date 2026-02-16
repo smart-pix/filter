@@ -26,6 +26,18 @@ def loadExampleTestVectors():
     y_test = np.array(y_test.values.tolist()).flatten()
     return x_test, y_test
 
+def signalAboveThreshold(X, noise_threshold):
+    X = np.where(X < noise_threshold, 0, X)
+    return X
+
+# Vectorized sumRow function for all rows
+def sumRow_vectorized(X, size_x):
+    # X = np.where(X < noise_threshold, 0, X) # moved to separate function called earlier
+    # X shape: (num_samples, 273)
+    X_reshaped = X.reshape(-1, 16, size_x) # Changed from (13, X size) to (16, X size) after padding (14Sep25)
+    X_reshaped = np.sum(X_reshaped, axis=2)
+    return X_reshaped  # shape: (num_samples, 16)
+
 # load data from parquet files
 def loadParquetData(
     inFilePath="data/", # in path where the labels, recon2D files sit
@@ -35,6 +47,7 @@ def loadParquetData(
     qm_charge_levels = [400, 1600, 2400], # quantize manual charge levels
     qm_quant_values = [0, 1, 2, 3], # quantize manual quant values
     outDir = None, # output directory for the csv files
+    useYProfilePulsing=True, # Create pulsing pattern using Yprofile. If False, use the recon2D data directly
 ):
     if zero_pad == True:
         size_y, size_x = 13, 21
@@ -95,21 +108,13 @@ def loadParquetData(
     trainrecons_csv = pd.concat(trainrecons, ignore_index=True)
     print(len(trainrecons_csv))
 
-    # Vectorized sumRow function for all rows
-    def sumRow_vectorized(X):
-        X = np.where(X < noise_threshold, 0, X)
-        # X shape: (num_samples, 273)
-        X_reshaped = X.reshape(-1, 16, size_x) # Changed from (13, X size) to (16, X size) after padding (14Sep25)
-        X_reshaped = np.sum(X_reshaped, axis=2)
-        return X_reshaped  # shape: (num_samples, 16)
-
     print("Creating yprofiles")
     
     # Convert DataFrames to numpy arrays for vectorized operations
     trainrecons_np = trainrecons_csv.values  # shape: (num_samples, 273) -> (num_samples, 16*21) after DS introduced noise-injection and padding (14Sep25)
-
+    trainrecons_np = signalAboveThreshold(trainrecons_np, noise_threshold)
     # Compute yprofiles in a vectorized way
-    yprofiles = sumRow_vectorized(trainrecons_np)
+    yprofiles = sumRow_vectorized(trainrecons_np, size_x)
     # convert to numpy
     yprofiles = np.array(yprofiles)
     # pad the yprofiles to get to 16 dimension
@@ -124,6 +129,13 @@ def loadParquetData(
         np.save(os.path.join(outDir, 'ylocals.npy'), ylocals)
         np.save(os.path.join(outDir, 'clslabels.npy'), clslabels)
         np.save(os.path.join(outDir, 'pts.npy'), pts)
+        if not useYProfilePulsing:
+            if size_x != 16:
+                print("Dataset passed should be 16x16. Reverting back to using yprofile pulsing.")
+                useYProfilePulsing = True
+            else:
+                trainrecons_save = trainrecons_np.reshape(-1, 16, size_x)
+                np.save(os.path.join(outDir, 'recon2D.npy'), trainrecons_save)
 
     # output dictionary
     outDict = {
@@ -131,7 +143,8 @@ def loadParquetData(
         "ylocals": ylocals,
         "clslabels": clslabels,
         "pts": pts,
-        "outDir": outDir
+        "outDir": outDir,
+        "recon2D": trainrecons_save if not useYProfilePulsing else None,
     }
     return outDict
 
@@ -142,6 +155,17 @@ def yprofileToCompoutWrite(yprofiles, csv_file_name, flip=True):
     print("Making compout of y-local subset")
     print("   writing to file:", csv_file_name,)
     filtered_pixelout = input_to_pixelout(yprofiles, flip)
+    with open(csv_file_name, mode='w', newline='') as file:
+        writer = csv.writer(file)
+        writer.writerows(filtered_pixelout)
+    print("   done!")
+
+# convert yprofiles to the pixel programming for asic
+def recon2DToCompoutWrite(recon2D, csv_file_name, flip=True):
+    # create compout of y-local subset
+    print("Making compout of y-local subset")
+    print("   writing to file:", csv_file_name,)
+    filtered_pixelout = reconInput_to_pixelout(recon2D)
     with open(csv_file_name, mode='w', newline='') as file:
         writer = csv.writer(file)
         writer.writerows(filtered_pixelout)
@@ -278,6 +302,33 @@ def input_to_pixelout(x, flip):
                         encoder_sum.reverse()
 
             encoder_values.append(encoder_sum)
+        encoder_values = [j for i in encoder_values for j in i]
+        encoder_values_Ninferences.append(encoder_values)
+        
+    compout_values_Ninferences = []
+    for i in range(N_INFERENCES):
+        compout_values = []
+        for j in range(256):
+            a = encoder_values_Ninferences[i][j]
+            if(a==3):
+                compout_values.append(7)
+            elif(a==2):
+                compout_values.append(3)
+            elif(a==1):
+                compout_values.append(1)
+            else:
+                compout_values.append(0)
+        compout_values_Ninferences.append(compout_values)
+
+    return compout_values_Ninferences
+
+def reconInput_to_pixelout(x):
+    N_INFERENCES = x.shape[0]
+    assert x[0].shape == (16,16), "Input recon2D data must have shape (16x16)"
+    # first create compout
+    encoder_values_Ninferences = []
+    for i in range(N_INFERENCES):
+        encoder_values = x[i]
         encoder_values = [j for i in encoder_values for j in i]
         encoder_values_Ninferences.append(encoder_values)
         

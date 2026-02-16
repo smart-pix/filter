@@ -114,11 +114,11 @@ confs_TB1_BDtuning4_TS20 = [
         "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.10_14.42.55_DNN_vth0-0.014_vth1-0.083_vth2-0.128/final_results_ts20.npy",
         "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.10_14.42.55_DNN_vth0-0.014_vth1-0.083_vth2-0.128/yprofiles.csv"
         },
-    {
-        "qm_charge_levels" : [600, 1600, 2400], 
-        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.17_15.27.31_DNN_vth0-0.025_vth1-0.083_vth2-0.128/final_results_ts20.npy",
-        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.17_15.27.31_DNN_vth0-0.025_vth1-0.083_vth2-0.128/yprofiles.csv"
-        },
+    # {
+    #     "qm_charge_levels" : [600, 1600, 2400], 
+    #     "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.17_15.27.31_DNN_vth0-0.025_vth1-0.083_vth2-0.128/final_results_ts20.npy",
+    #     "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.17_15.27.31_DNN_vth0-0.025_vth1-0.083_vth2-0.128/yprofiles.csv"
+    #     },
     {
         "qm_charge_levels" : [700, 1600, 2400], 
         "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.11_22.36.24_DNN_vth0-0.031_vth1-0.083_vth2-0.128/final_results_ts20.npy",
@@ -134,6 +134,102 @@ confs_TB1_BDtuning4_TS20 = [
     #     "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.15_02.40.00_DNN_vth0-0.083_vth1-0.106_vth2-0.128/final_results_ts20.npy",
     #     "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.15_02.40.00_DNN_vth0-0.083_vth1-0.106_vth2-0.128/yprofiles.csv"
     #     },
+]
+
+
+confs_TB1_BDtuning4_TS20_dataset3s = [
+    {
+        "qm_charge_levels" : [700, 1600, 2400], 
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.11.03_13.50.11_DNN_vth0-0.031_vth1-0.083_vth2-0.128/dnn_RTL_out.npy",
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.11.03_13.50.11_DNN_vth0-0.031_vth1-0.083_vth2-0.128/yprofiles.csv"
+        },
+]
+
+confs_TB1Chip23_BDtuning4 = [
+    {
+        "qm_charge_levels" : [300, 1600, 2400],
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.24_07.09.31_DNN_vth0-0.006_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.24_07.09.31_DNN_vth0-0.006_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels" : [400, 1600, 2400],
+        # "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.11_19.28.11_DNN_vth0-0.012_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        # "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.11_19.28.11_DNN_vth0-0.012_vth1-0.082_vth2-0.129/yprofiles.csv"
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.29_07.16.26_DNN_vth0-0.012_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events, run 2 (after yprofiles.csv got deleted, albeit recoverable, from run 1)
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.29_07.16.26_DNN_vth0-0.012_vth1-0.082_vth2-0.129/yprofiles.csv"
+    #     "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.16_08.36.14_DNN_vth0-0.012_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results from older iteration of trained model (model0) for 100k events
+    #     "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.16_08.36.14_DNN_vth0-0.012_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels" : [500, 1600, 2400],
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.19_22.29.42_DNN_vth0-0.018_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.19_22.29.42_DNN_vth0-0.018_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels" : [600, 1600, 2400],
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.18_12.56.33_DNN_vth0-0.024_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.18_12.56.33_DNN_vth0-0.024_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels" : [700, 1600, 2400],
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.13_07.06.18_DNN_vth0-0.030_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.13_07.06.18_DNN_vth0-0.030_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels": [800, 1600, 2400],
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.15_03.22.25_DNN_vth0-0.036_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.15_03.22.25_DNN_vth0-0.036_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels": [900, 1600, 2400],
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.22_16.52.09_DNN_vth0-0.041_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.22_16.52.09_DNN_vth0-0.041_vth1-0.082_vth2-0.129/yprofiles.csv"
+    },
+    {
+        "qm_charge_levels" : [1000, 1600, 2400], 
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.09_22.52.47_DNN_vth0-0.047_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results for 150k events
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.01.09_22.52.47_DNN_vth0-0.047_vth1-0.082_vth2-0.129/yprofiles.csv"
+        # "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.15_15.30.47_DNN_vth0-0.047_vth1-0.082_vth2-0.129/final_results_ts19.npy", # results from older iteration of trained model (model0) for 100k events
+        # "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.15_15.30.47_DNN_vth0-0.047_vth1-0.082_vth2-0.129/yprofiles.csv"
+        },
+]
+confs_TB1Chip23_BDtuning4_noiseRetrained = [
+    {
+        "qm_charge_levels" : [1000, 1600, 2400],
+        # Second run, model trained with smaller learning rate, results for 10k events
+        "asic_path": "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.02.16_05.59.22_DNN_vth0-0.047_vth1-0.082_vth2-0.129/final_results_ts19.npy",
+        "asic_yprofiles_path": "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.02.16_05.59.22_DNN_vth0-0.047_vth1-0.082_vth2-0.129/yprofiles.csv"
+        # First run, results for 160k events
+        # "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.02.09_13.22.10_DNN_vth0-0.047_vth1-0.082_vth2-0.129/final_results_ts17.npy", 
+        # "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2026.02.09_13.22.10_DNN_vth0-0.047_vth1-0.082_vth2-0.129/yprofiles.csv"
+    }
+]
+
+# ========== ARCHIVE ============
+
+
+confs_TB1Chip23_BDtuning4_lowBxClk16x16 = [
+    {
+        "qm_charge_levels" : [1000, 1600, 2400], 
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.02_17.37.30_DNN_vth0-0.047_vth1-0.082_vth2-0.129/final_results_ts18.npy",
+        # "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.02_17.37.30_DNN_vth0-0.047_vth1-0.082_vth2-0.129/dnn_RTL_out.npy",
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID23_SuperPix1/2025.12.02_17.37.30_DNN_vth0-0.047_vth1-0.082_vth2-0.129/yprofiles.csv"
+        },
+]
+
+confs_TB1_BDtuning4_TS20_flippedInjections = [
+    {
+        "qm_charge_levels" : [700, 1600, 2400], 
+        "datadir": "/asic/projects/C/CMS_PIX_28/dshekar/filter/model_pipeline/tmp_21x13_flipped/700_1600_2400/", 
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.19_18.33.26_DNN_vth0-0.031_vth1-0.083_vth2-0.128/final_results_ts20.npy",
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.19_18.33.26_DNN_vth0-0.031_vth1-0.083_vth2-0.128/yprofiles.csv"
+        },
+    {
+        "qm_charge_levels" : [800, 1600, 2400], 
+        "datadir": "/asic/projects/C/CMS_PIX_28/dshekar/filter/model_pipeline/tmp_21x13_unflipped/700_1600_2400/",
+        "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.20_08.00.00_DNN_vth0-0.031_vth1-0.083_vth2-0.128/final_results_ts20.npy",
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.10.20_08.00.00_DNN_vth0-0.031_vth1-0.083_vth2-0.128/yprofiles.csv"
+        },
 ]
 
 # train model on dataset2sNoise with 100e-sigma noise injected and then quantized at paper thresholds (400,1600,2400). Poor match with RTL results.
@@ -369,15 +465,19 @@ confs_TB1_BDtuning4_ds14ChipYprofile_TS20 = [
 #           TEST BENCH 2
 # ================================
 confs_TB2_BDtuning = [
-    # {
-    #     "qm_charge_levels" : [400, 1600, 2400], 
-    #     "asic_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.01_00.00.06_DNN_vth0-0.014_vth1-0.083_vth2-0.128/final_results.npy",
-    #     "asic_yprofiles_path" : "/mnt/local/CMSPIX28/data/ChipVersion1_ChipID17_SuperPix1/2025.09.01_00.00.06_DNN_vth0-0.014_vth1-0.083_vth2-0.128/yprofiles.csv"
-    #     },
     {
         "qm_charge_levels" : [1300, 1600, 2400], 
         "asic_path" : "/mnt/local/CMSPIX28/Scurve/data/ChipVersion1_ChipID18_SuperPix1/2025.08.30_00.40.46_DNN_vth0-0.064_vth1-0.085_vth2-0.135/final_results.npy",
         "asic_yprofiles_path" : "/mnt/local/CMSPIX28/Scurve/data/ChipVersion1_ChipID18_SuperPix1/2025.08.30_00.40.46_DNN_vth0-0.064_vth1-0.085_vth2-0.135/yprofiles.csv"
+        },
+        
+]
+
+confs_TB2_BDtuning = [
+    {
+        "qm_charge_levels" : [700, 1600, 2400], 
+        "asic_path" : "/mnt/local/CMSPIX28/Scurve/data/ChipVersion1_ChipID21_SuperPix1/2025.11.06_14.07.42_DNN_vth0-0.031_vth1-0.083_vth2-0.128/final_results.npy",
+        "asic_yprofiles_path" : "/mnt/local/CMSPIX28/Scurve/data/ChipVersion1_ChipID21_SuperPix1/2025.11.06_14.07.42_DNN_vth0-0.031_vth1-0.083_vth2-0.128/yprofiles.csv"
         },
         
 ]

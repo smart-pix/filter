@@ -6,6 +6,7 @@ tmp*.gz
 # train/test data production and model related
 dataset_*
 model_results/*
+archive/*
 
 # hls4ml outputs
 firmware/*
