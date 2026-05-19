@@ -95,6 +95,7 @@ def loadParquetData(
         temp_array = temp_array.reshape(temp_array.shape[0], -1)
         temp = pd.DataFrame(temp_array, columns=[f"{i}" for i in range(temp_array.shape[1])])
         # Quantize data
+        print("NOTE!!  Quantizing data with levels:", qm_charge_levels, "and values:", qm_quant_values)
         temp = quantize_manual(temp, charge_levels=qm_charge_levels, quant_values=qm_quant_values, shuffled=True)
         trainrecons.append(temp)
 
